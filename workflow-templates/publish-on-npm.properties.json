@@ -1,0 +1,13 @@
+{
+    "name": "Npm Publish Workflow",
+    "description": "Npm Publish workflow template",
+    "iconName": "upradata-logo.svg",
+    "categories": [
+        "Node",
+        "Javascript",
+        "Typescript"
+    ],
+    "filePatterns": [
+        "^package.json$"
+    ]
+}
