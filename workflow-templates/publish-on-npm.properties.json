@@ -1,7 +1,7 @@
 {
-    "name": "Npm Publish Workflow",
+    "name": "Npm Publish",
     "description": "Npm Publish workflow template",
-    "iconName": "upradata-logo.svg",
+    "iconName": "upradata-logo",
     "categories": [
         "Node",
         "Javascript",
