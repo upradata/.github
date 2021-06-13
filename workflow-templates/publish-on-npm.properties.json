@@ -1,6 +1,6 @@
 {
     "name": "Npm Publish",
-    "description": "Npm Publish workflow template",
+    "description": "Npm Publish using pnpm install/build",
     "iconName": "upradata-logo",
     "categories": [
         "Node",
