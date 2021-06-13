@@ -34,7 +34,7 @@ jobs:
                   check-latest: true
                   registry-url: "https://registry.npmjs.org"
 
-            # Setup Pnpm
+            # Setup Pnpm and run pnpm install
 
             - name: Cache pnpm modules
               uses: actions/cache@v2
@@ -52,12 +52,7 @@ jobs:
                   version: 6.7.6
                   run_install: true
 
-              # Runs pnpm install and then build
-
-            - name: Pnpm install
-              uses: creepinson/pnpm-action@master
-              with:
-                  arguments: '["install"]'
+              # Runs pnpm build
 
             - name: Pnpm Build
               uses: creepinson/pnpm-action@master
