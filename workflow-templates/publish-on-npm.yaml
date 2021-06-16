@@ -30,34 +30,33 @@ jobs:
             - name: Setup Node
               uses: actions/setup-node@v2
               with:
-                  node-version: 14
+                  node-version: 15.9.0
                   check-latest: true
                   registry-url: "https://registry.npmjs.org"
 
             # Setup Pnpm and run pnpm install
 
-            - name: Cache pnpm modules
+            - name: Create cache pnpm modules
               uses: actions/cache@v2
               env:
                   cache-name: cache-pnpm-modules
               with:
                   path: ~/.pnpm-store
                   key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-                  restore-keys: |
-                      ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
+                  restore-keys: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node-version }}-
 
             - name: Setup Pnpm
-              uses: pnpm/action-setup@v2.0.1
-              with:
-                  version: 6.7.6
-                  run_install: true
+              # Using actions/setup-node@v2 you need to install pnpm with root permissions, eg:sudo npm install -g pnpm.
+              # Alternatively, if you specify the Node.js version to use, pnpm may be installed with no priviledged user
+              run: curl -f https://get.pnpm.io/v6.7.js | node - add --global pnpm@6
 
               # Runs pnpm build
 
+            - name: Pnpm Install
+              run: pnpm install
+
             - name: Pnpm Build
-              uses: creepinson/pnpm-action@master
-              with:
-                  arguments: '["build"]'
+              run: pnpm build
 
             # Publish on NPM Repository
 
