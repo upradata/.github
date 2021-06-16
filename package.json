@@ -24,7 +24,7 @@
     "bin": {},
     "license": "MIT",
     "version": "1.0.0",
-    "description": "",
+    "description": "Sets of workflow templates for Upra-Data GitHub Organization",
     "sideEffects": false,
     "main": "lib",
     "types": "lib-esm",
