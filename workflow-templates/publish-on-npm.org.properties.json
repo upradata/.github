@@ -9,6 +9,6 @@
         "Typescript"
     ],
     "filePatterns": [
-        "^package.json$"
+        "workflow-templates"
     ]
 }

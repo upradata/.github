@@ -53,7 +53,7 @@ jobs:
               # Runs pnpm build
 
             - name: Pnpm Install
-              run: pnpm install
+              run: pnpm install --frozen-lockfile=false
 
             - name: Pnpm Build
               run: pnpm build
