@@ -3,6 +3,9 @@ name: Organization => Publish on NPM
 on:
     repository_dispatch:
         types: [upradata/org-workflow]
+        paths:
+            - "**.js"
+            - "**.ts"
 
 jobs:
     register-organization:

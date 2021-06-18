@@ -5,6 +5,10 @@ on:
     # Triggers the workflow on push or pull request events but only for the master branch
     push:
         branches: [$default-branch]
+        paths:
+            - "**.js"
+            - "**.ts"
+
     # pull_request:
     #     branches: [master]
 
