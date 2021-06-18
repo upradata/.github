@@ -1,0 +1,14 @@
+{
+    "name": "Dispatch Npm Publish",
+    "description": "Dispatch Npm Publish event",
+    "iconName": "upradata-logo",
+    "categories": [
+        "Deployment",
+        "Node",
+        "Javascript",
+        "Typescript"
+    ],
+    "filePatterns": [
+        "^package.json$"
+    ]
+}
