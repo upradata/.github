@@ -37,7 +37,7 @@ jobs:
               name: Manual publish => Checkout
               uses: actions/checkout@v2.3.4
               with:
-                  repository: ${{ github.event.client_payload.event.full_name }}
+                  repository: ${{ github.event.client_payload.event.repository.full_name }}
                   ref: ${{ github.event.client_payload.event.ref }}
 
             # Setup Node
