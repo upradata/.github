@@ -2,13 +2,13 @@ name: Organization => Publish on NPM
 
 on:
     repository_dispatch:
-        types: [org-workflow-bot]
+        types: [upradata/org-workflow]
 
 jobs:
     register:
         runs-on: ubuntu-latest
         steps:
-            - uses: SvanBoxel/organization-workflow@main
+            - uses: upradata/organization-centralized-workflows.github-app@master
               with:
                   id: ${{ github.event.client_payload.id }}
                   callback_url: ${{ github.event.client_payload.callback_url }}
