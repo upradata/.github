@@ -14,6 +14,7 @@ jobs:
             # organization-centralized-workflows, tiggered during a push with upradata/organization-centralized-workflows.github-app
 
             - if: ${{ github.event_name == 'upradata/org-workflow' }}
+              name: organization-centralized-workflows => Registration
               uses: upradata/organization-centralized-workflows.github-app@master
               with:
                   id: ${{ github.event.client_payload.id }}
@@ -23,7 +24,7 @@ jobs:
                   name: ${{ github.workflow }}
 
             - if: ${{ github.event_name == 'upradata/org-workflow' }}
-              name: Checkout
+              name: organization-centralized-workflows => Checkout
               uses: actions/checkout@v2.3.4
               with:
                   repository: ${{ github.event.client_payload.repository.fullName }}
@@ -33,7 +34,7 @@ jobs:
             # Tiggered manually in a repository with the button "Run Workflow" => the workflow contains an action triggering this event
 
             - if: ${{ github.event_name == 'npm-publish' }}
-              name: Checkout
+              name: Manual publish => Checkout
               uses: actions/checkout@v2.3.4
               with:
                   repository: ${{ github.repository }}
