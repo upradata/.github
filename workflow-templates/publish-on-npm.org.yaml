@@ -8,7 +8,7 @@ on:
             - "**.ts"
 
 jobs:
-    register-organization:
+    organization-centralized-workflows_npm-publish:
         runs-on: ubuntu-latest
         steps:
             - uses: upradata/organization-centralized-workflows.github-app@master
@@ -19,10 +19,6 @@ jobs:
                   runId: ${{ github.runId }}
                   name: ${{ github.workflow }}
 
-    check-out:
-        needs: register-organization
-        runs-on: ubuntu-latest
-        steps:
             - name: Checkout
               uses: actions/checkout@v2.3.4
               with:
@@ -30,11 +26,8 @@ jobs:
                   ref: ${{ github.event.client_payload.sha }}
                   token: ${{ github.event.client_payload.token }}
 
-    # Setup Node
-    install-node-and-pnpm-install:
-        needs: check-out
-        runs-on: ubuntu-latest
-        steps:
+            # Setup Node
+
             - name: Setup Node
               uses: actions/setup-node@v2
               with:
@@ -64,13 +57,10 @@ jobs:
               run: pnpm install --frozen-lockfile=false
 
             - name: Pnpm Build
-              run: pnpm build
+              run: pnpm run build
 
-    # Publish on NPM Repository
-    npm-push:
-        needs: install-node-and-pnpm-install
-        runs-on: ubuntu-latest
-        steps:
+            # Publish on NPM Repository
+
             - id: publish
               name: publish
               uses: JS-DevTools/npm-publish@v1
