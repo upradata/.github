@@ -11,6 +11,11 @@ jobs:
     npm-publish:
         runs-on: ubuntu-latest
         steps:
+            - name: Dump GitHub context
+              env:
+                GITHUB_CONTEXT: ${{ toJson(github) }}
+              run: echo "$GITHUB_CONTEXT"
+               
             # organization-centralized-workflows, tiggered during a push with upradata/organization-centralized-workflows.github-app
 
             - if: ${{ github.event.action == 'upradata/org-workflow' }}
