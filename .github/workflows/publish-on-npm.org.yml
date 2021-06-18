@@ -64,7 +64,7 @@ jobs:
               run: pnpm install --frozen-lockfile=false
 
             - name: Pnpm Build
-              run: pnpm build
+              run: ls && pnpm run build
 
     # Publish on NPM Repository
     npm-push:
