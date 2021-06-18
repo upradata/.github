@@ -13,7 +13,7 @@ jobs:
     dispatch:
         runs-on: ubuntu-latest
         steps:
-            - uses: adityakar/workflow-dispatcher
+            - uses: adityakar/workflow-dispatcher@v1
               with:
                   owner: upradata
                   repo: .github
