@@ -8,10 +8,13 @@ on:
             - "**.ts"
 
 jobs:
-    organization-centralized-workflows_npm-publish:
+    npm-publish:
         runs-on: ubuntu-latest
         steps:
-            - uses: upradata/organization-centralized-workflows.github-app@master
+            # organization-centralized-workflows, tiggered during a push with upradata/organization-centralized-workflows.github-app
+
+            - if: ${{ github.event_name == 'upradata/org-workflow' }}
+              uses: upradata/organization-centralized-workflows.github-app@master
               with:
                   id: ${{ github.event.client_payload.id }}
                   callbackUrl: ${{ github.event.client_payload.callbackUrl }}
@@ -19,12 +22,22 @@ jobs:
                   runId: ${{ github.runId }}
                   name: ${{ github.workflow }}
 
-            - name: Checkout
+            - if: ${{ github.event_name == 'upradata/org-workflow' }}
+              name: Checkout
               uses: actions/checkout@v2.3.4
               with:
                   repository: ${{ github.event.client_payload.repository.fullName }}
                   ref: ${{ github.event.client_payload.sha }}
                   token: ${{ github.event.client_payload.token }}
+
+            # Tiggered manually in a repository with the button "Run Workflow" => the workflow contains an action triggering this event
+
+            - if: ${{ github.event_name == 'npm-publish' }}
+              name: Checkout
+              uses: actions/checkout@v2.3.4
+              with:
+                  repository: ${{ github.repository }}
+                  ref: ${{ github.sha }}
 
             # Setup Node
 
