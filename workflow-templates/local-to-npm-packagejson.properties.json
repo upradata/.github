@@ -1,0 +1,14 @@
+{
+    "name": "Organization: Local to Npm dependencies",
+    "description": "Copy local dependencies to npm dependencies (package.json)",
+    "iconName": "upradata-logo",
+    "categories": [
+        "Build",
+        "Node",
+        "Javascript",
+        "Typescript"
+    ],
+    "filePatterns": [
+        "package.json"
+    ]
+}

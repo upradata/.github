@@ -1,0 +1,52 @@
+name: Copy To Local package.json
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+    repository_dispatch:
+        types: [upradata/org-workflow]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+    # This workflow contains a single job called "build"
+    build:
+        # The type of runner that the job will run on
+        runs-on: ubuntu-latest
+
+        # Steps represent a sequence of tasks that will be executed as part of the job
+        steps:
+            - name: organization-centralized-workflows => Registration
+              uses: upradata/organization-centralized-workflows.github-app@master
+              with:
+                  id: ${{ github.event.client_payload.id }}
+                  callbackUrl: ${{ github.event.client_payload.callbackUrl }}
+                  sha: ${{ github.event.client_payload.sha }}
+                  runId: ${{ github.runId }}
+                  name: ${{ github.workflow }}
+
+            # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+            - uses: actions/checkout@v2
+
+            - name: Setup Pnpm
+              run: curl -f https://get.pnpm.io/v6.7.js | node - add --global pnpm@6
+
+            - name: install @upradata/npx-local and execute
+              run: |
+                  pnpm add -D @upradata/npx-local
+                  echo $(ls)
+                  echo $(ls bin)
+                  ./bin/npx-local local-to-npm
+
+            # transfer the new html files back into the repository
+            - name: Commit files
+              run: |
+                  git config --local user.name  ${{ github.actor }}
+                  git add package.json
+                  git commit -m "Updating package.json: copy local deps to npm dependencies"
+
+            # push the output folder to your repo
+            - name: Push changes
+              uses: ad-m/github-push-action@master
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  force: true
