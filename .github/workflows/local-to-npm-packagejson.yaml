@@ -62,7 +62,7 @@ jobs:
 
             - name: Commit files
               run: |
-                  git config --local user.name  ${{ github.actor }}
+                  git config --local user.name  ${{ github.event.client_payload.repository.owner.login }}
                   git add package.json
                   git commit -m "Updating package.json: copy local deps to npm dependencies"
 
