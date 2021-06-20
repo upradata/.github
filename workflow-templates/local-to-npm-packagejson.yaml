@@ -56,10 +56,7 @@ jobs:
 
             - name: install @upradata/npx-local and execute
               run: |
-                  pnpm add -D @upradata/npx-local
-                  echo $(ls)
-                  echo $(ls bin)
-                  ./bin/npx-local local-to-npm
+                  pnpx --package @upradata/npx-local npx-local local-to-npm
 
             # transfer the new html files back into the repository
 
