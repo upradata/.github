@@ -7,11 +7,14 @@ on:
         types: [upradata/org-workflow]
 
 jobs:
-    build:
+    update-package-json:
         runs-on: ubuntu-latest
 
         steps:
-            # Checkout repository
+            # - name: Dump GitHub context
+            #   env:
+            #     GITHUB_CONTEXT: ${{ toJson(github) }}
+            #   run: echo "$GITHUB_CONTEXT"
 
             - name: organization-centralized-workflows => Registration
               uses: upradata/organization-centralized-workflows.github-app@master
@@ -22,12 +25,19 @@ jobs:
                   runId: ${{ github.runId }}
                   name: ${{ github.workflow }}
 
+            # Checkout repository
             - name: organization-centralized-workflows => Checkout
-              uses: actions/checkout@v2.3.4
-              with:
-                  repository: ${{ github.event.client_payload.repository.fullName }}
-                  ref: ${{ github.event.client_payload.sha }}
-                  token: ${{ github.event.client_payload.token }}
+              run: |
+                  PACKAGE_DIR=${{ github.event.client_payload.event.repository.name }}
+                  mkdir $PACKAGE_DIR
+                  cd $PACKAGE_DIR
+                  git clone ${{ github.event.client_payload.event.repository.clone_url }}
+
+              # uses: actions/checkout@v2.3.4
+              # with:
+              #     repository: ${{ github.event.client_payload.repository.fullName }}
+              #     ref: ${{ github.event.client_payload.sha }}
+              #     token: ${{ github.event.client_payload.token }}
 
             # Setup Node
 
@@ -62,14 +72,16 @@ jobs:
 
             - name: Commit files
               run: |
-                  git config --local user.name  ${{ github.event.client_payload.event.repository.owner.login }}
+                  git config --local user.name ${{ github.event.client_payload.event.repository.owner.login }}
+                  git config user.email ${{ github.event.client_payload.event.repository.owner.email }}
                   git add package.json
                   git commit -m "Updating package.json: copy local deps to npm dependencies"
+                  git push
 
             # push the output folder to your repo
 
-            - name: Push changes
-              uses: ad-m/github-push-action@master
-              with:
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
-                  force: true
+            # - name: Push changes
+            #   uses: ad-m/github-push-action@master
+            #   with:
+            #       github_token: ${{ secrets.GITHUB_TOKEN }}
+            #       force: true
