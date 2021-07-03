@@ -30,8 +30,8 @@ jobs:
               run: |
                   PACKAGE_DIR=${{ github.event.client_payload.event.repository.name }}
                   mkdir $PACKAGE_DIR
-                  cd $PACKAGE_DIR
                   git clone ${{ github.event.client_payload.event.repository.clone_url }}
+                  cd $PACKAGE_DIR
 
               # uses: actions/checkout@v2.3.4
               # with:
